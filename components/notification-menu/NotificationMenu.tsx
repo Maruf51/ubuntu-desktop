@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react"
-import { BellIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { BellIcon } from 'lucide-react'
 import { Switch } from "@/components/ui/switch"
 import { formatDateTime } from "@/functions/functions"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
@@ -9,7 +9,7 @@ import { Calendar } from "../ui/calendar"
 
 export default function NotificationMenu() {
     const { date: currentDate, time } = formatDateTime()
-    const [doNotDisturb, setDoNotDisturb] = useState(false)
+    const [doNotDisturb, setDoNotDisturb] = useState<boolean>(false)
     const [date, setDate] = useState<Date | undefined>(new Date())
     const newDate = new Date()
 

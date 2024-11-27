@@ -6,11 +6,12 @@ import { IoIosArrowBack } from "react-icons/io"
 import { twMerge } from "tailwind-merge"
 import { useStore } from "zustand"
 import linuxImage from '@/images/linux.png'
+import { UserStoreTypes } from "@/types/types"
 
 const LoginForm = ({ clickHandler }: { clickHandler: () => void }) => {
     const [error, setError] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
-    const { setUser }: any = useStore(userStore)
+    const { setUser }: UserStoreTypes = useStore(userStore)
 
     const loginHandler = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault()

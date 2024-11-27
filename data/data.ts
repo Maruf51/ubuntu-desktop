@@ -24,9 +24,10 @@ import { IoAccessibility } from "react-icons/io5";
 import { IoHandLeftOutline } from "react-icons/io5";
 import { FiSettings } from "react-icons/fi";
 import Settings from '@/components/doc-apps/Settings';
+import { DocAppTypes, SettingsSidebarTypes } from '@/types/types'
 
 
-const wallpapers = [
+const wallpapers: string[] = [
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/Numbat_wallpaper_dimmed_3480x2160_jOXt7kp5i.png',
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/Clouds_by_Tibor_Mokanszki_O4Hkzo_7G.jpg',
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/Fuwafuwa_nanbatto_san_by_amaral-dark_f2rMcZwoF.png',
@@ -36,42 +37,34 @@ const wallpapers = [
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/ubuntu-wallpaper-d_dLFAFk01d.png'
 ]
 
-const docApps = [
+const docApps: DocAppTypes[] = [
     {
         name: 'brave',
         title: 'Brave Web Browser',
-        active: null,
         icon: braveIcon,
-        open: null,
         component: SoftwareUpdater
     },
     {
         name: 'files',
         title: 'Files',
-        active: null,
         icon: filesIcon,
-        open: null,
         component: SoftwareUpdater
     },
     {
         name: 'software updater',
         title: 'Software Updater',
-        active: null,
         icon: softwareUpdaterIcon,
-        open: null,
         component: SoftwareUpdater
     },
     {
         name: 'settings',
         title: 'Settings',
-        active: null,
         icon: Configure,
-        open: null,
         component: Settings
     }
 ]
 
-const settingsSidebar = [
+const settingsSidebar: SettingsSidebarTypes[][] = [
     [
         {
             name: 'Network',
@@ -164,7 +157,7 @@ const settingsSidebar = [
     ]
 ]
 
-const colors = [
+const colors: string[] = [
     '#e95420', '#787859', '#657b69', '#4b8501', '#03875b', '#308280', '#0073e5', '#7764d8', '#b34cb3', '#da3450'
 ]
 

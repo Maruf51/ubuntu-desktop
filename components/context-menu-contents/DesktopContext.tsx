@@ -3,11 +3,11 @@ import { ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuS
 import { useStore } from 'zustand'
 import { windowStore } from '@/store/useStore'
 import Settings from '../doc-apps/Settings'
+import { WindowStoreTypes } from '@/types/types'
 
-interface Props { }
 
-const DesktopContext: NextPage<Props> = ({ }) => {
-    const {addNewWindow, setActiveWindow}: any = useStore(windowStore)
+const DesktopContext: NextPage = ({ }) => {
+    const {addNewWindow, setActiveWindow}: WindowStoreTypes = useStore(windowStore)
 
     return (
         <ContextMenuContent>

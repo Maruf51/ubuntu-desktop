@@ -4,7 +4,7 @@ import { NextPage } from 'next'
 import { FaPowerOff } from 'react-icons/fa'
 import { PopoverContent } from '../ui/popover'
 import { Slider } from '../ui/slider'
-import { useMetaDataStore, userStore } from '@/store/useStore'
+import { metaDataStore, userStore } from '@/store/useStore'
 import { PiNetworkFill } from 'react-icons/pi'
 import { SlSpeedometer } from 'react-icons/sl'
 import { LuSunMoon } from 'react-icons/lu'
@@ -16,10 +16,8 @@ import { MdLockOutline } from "react-icons/md";
 import { LuSettings } from "react-icons/lu";
 import { RiScreenshot2Line } from "react-icons/ri";
 import { useTheme } from 'next-themes'
+import { MetaDataStoreTypes, UserStoreTypes } from '@/types/types'
 
-
-
-interface Props { }
 
 const volumeIcon = (volume: number) => {
     if (volume === 0) return <FaVolumeXmark className='hover:bg-[#3e3e3e] w-7 h-7 p-1.5 rounded-full' />
@@ -27,9 +25,9 @@ const volumeIcon = (volume: number) => {
     return <FaVolumeHigh className='hover:bg-[#3e3e3e] w-7 h-7 p-1.5 rounded-full' />
 }
 
-const PowerDropdown: NextPage<Props> = ({ }) => {
-    const { volume, setVolume, nightLight, power, changeTheme, changePower, changeNightLight, mute }: any = useMetaDataStore()
-    const { user, setLock, setUser }: any = useStore(userStore)
+const PowerDropdown: NextPage = ({ }) => {
+    const { volume, setVolume, nightLight, power, changePower, changeNightLight, mute }: MetaDataStoreTypes = metaDataStore()
+    const { user, setLock, setUser }: UserStoreTypes = useStore(userStore)
 
     const { theme, setTheme } = useTheme()
 

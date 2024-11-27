@@ -1,9 +1,6 @@
-import { Monitor, Wifi, Bluetooth, Volume2, Power, Layout, Palette, Bell, Search, Users, Share2, Mouse, Keyboard, Printer } from 'lucide-react'
-import { Switch } from "@/components/ui/switch"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useRef, useState } from 'react'
 import { useStore } from 'zustand'
-import { useMetaDataStore, windowStore } from '@/store/useStore'
+import { metaDataStore, windowStore } from '@/store/useStore'
 import { twMerge } from 'tailwind-merge'
 import Moveable from 'react-moveable'
 import WindowControlButton from '../shared/WindowControlButton'
@@ -12,6 +9,8 @@ import { colors, settingsSidebar, wallpapers } from '@/data/data'
 import { Separator } from '../ui/separator'
 import Image from 'next/image'
 import { useTheme } from 'next-themes'
+import { MetaDataStoreTypes, SettingsSidebarTypes, WindowStoreTypes } from '@/types/types'
+import { IconType } from 'react-icons/lib'
 
 interface Props {
     id: number,
@@ -19,15 +18,15 @@ interface Props {
 }
 
 export default function Settings({ id, zIndex }: Props) {
-    const { removeWindow, setActiveWindow, activeWindow }: any = useStore(windowStore)
+    const { removeWindow, setActiveWindow, activeWindow }: WindowStoreTypes = useStore(windowStore)
     const [fullScreen, setFullScreen] = useState<boolean>(false)
-    const [selectedSetting, setSelectedSetting] = useState<{ name: string, icon: any }>({
+    const [selectedSetting, setSelectedSetting] = useState<{ name: string, icon: IconType }>({
         name: 'Appearance',
         icon: FaBrush
     })
 
-    const windowRef = useRef<any>(null)
-    const headerRef = useRef<any>(null)
+    const windowRef = useRef<HTMLDivElement>(null)
+    const headerRef = useRef<HTMLDivElement>(null)
     return (
         <div style={{ zIndex: zIndex }} className={twMerge('w-[70%] h-[70%] absolute top-[100px] left-[200px] select-none rounded-xl overflow-hidden min_max_transition flex flex-col', activeWindow === id && ' z-10', fullScreen && '!top-0 !left-0 !w-full !h-full !transform-none !rounded-none')} ref={windowRef} onClick={() => setActiveWindow(id)}>
             <Moveable
@@ -36,7 +35,7 @@ export default function Settings({ id, zIndex }: Props) {
                 dragArea={true}
                 onDragStart={() => setActiveWindow(id)}
                 onDrag={({ beforeTranslate }) => {
-                    windowRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
+                    if (windowRef.current) windowRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
                 }}
             />
             <div ref={headerRef} className='w-full h-10 shrink-0 flex relative justify-between items-center text-sm font-semibold duration-300'>
@@ -58,15 +57,15 @@ export default function Settings({ id, zIndex }: Props) {
     )
 }
 
-const SettingsSidebar = ({ selectedSetting, setSelectedSetting }: { selectedSetting: { name: string, icon: any }, setSelectedSetting: (e: { name: string, icon: any }) => void }) => {
+const SettingsSidebar = ({ selectedSetting, setSelectedSetting }: { selectedSetting: SettingsSidebarTypes, setSelectedSetting: (e: SettingsSidebarTypes) => void }) => {
     return (
         <div className='overflow-auto h-full duration-300 bg-[#ebebeb] dark:bg-[#303030] max-w-[500px] min-w-[300px] w-[25%] flex justify-between items-center px-1 border-r border-[#dbdbdb] dark:border-[#4f4f4f] flex-col gap-1 py-1'>
             {
-                settingsSidebar.map((setting: any, index: number) => {
+                settingsSidebar.map((setting: SettingsSidebarTypes[], index: number) => {
                     return (
                         <div key={index} className='w-full flex flex-col justify-center gap-1'>
                             {
-                                setting.map((stng: { name: string, icon: any }, index2: number) => <div onClick={() => setSelectedSetting(stng)} className={twMerge('px-4 py-2 rounded-md text-sm hover:bg-[#d8d8d8] dark:hover:bg-[#454545] flex gap-3 items-center duration-300', selectedSetting.name === stng.name && 'bg-[#d8d8d8] dark:bg-[#454545]')} key={index2}>
+                                setting.map((stng: SettingsSidebarTypes, index2: number) => <div onClick={() => setSelectedSetting(stng)} className={twMerge('px-4 py-2 rounded-md text-sm hover:bg-[#d8d8d8] dark:hover:bg-[#454545] flex gap-3 items-center duration-300', selectedSetting.name === stng.name && 'bg-[#d8d8d8] dark:bg-[#454545]')} key={index2}>
                                     <stng.icon />
                                     <h4>{stng.name}</h4>
                                 </div>)
@@ -82,8 +81,8 @@ const SettingsSidebar = ({ selectedSetting, setSelectedSetting }: { selectedSett
     )
 }
 
-const SettingsDetails = ({ selectedSetting }: { selectedSetting: { name: string, icon: any } }) => {
-    const { wallpaper, setWallpaper }: any = useStore(useMetaDataStore)
+const SettingsDetails = ({ selectedSetting }: { selectedSetting: SettingsSidebarTypes }) => {
+    const { wallpaper, setWallpaper }: MetaDataStoreTypes = useStore(metaDataStore)
     const { theme, setTheme } = useTheme()
     return (
         <div className='bg-[#fafafa] dark:bg-[#2c2c2c] duration-300 w-full h-full flex flex-col justify-center items-center gap-5 flex-1 overflow-auto'>

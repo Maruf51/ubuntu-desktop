@@ -3,13 +3,10 @@ import { FaPowerOff, FaVolumeUp } from 'react-icons/fa'
 import { PiNetworkFill } from 'react-icons/pi'
 import { Popover, PopoverTrigger } from '../ui/popover'
 import PowerDropdown from '../shared/PowerDropdown'
-import { formatDateTime } from '@/functions/functions'
 import { twMerge } from 'tailwind-merge'
 import { useState } from 'react'
 
-interface Props { }
-
-const PowerMenu: NextPage<Props> = ({ }) => {
+const PowerMenu: NextPage = ({ }) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false)
     return (
         <Popover defaultOpen={isPopoverOpen} onOpenChange={(e) => setIsPopoverOpen(e)}>

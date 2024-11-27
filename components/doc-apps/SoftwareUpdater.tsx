@@ -7,6 +7,7 @@ import { windowStore } from '@/store/useStore'
 import { useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Moveable from 'react-moveable'
+import { WindowStoreTypes } from '@/types/types'
 
 interface Props {
     id: number,
@@ -14,20 +15,20 @@ interface Props {
 }
 
 const SoftwareUpdater: NextPage<Props> = ({ id, zIndex }) => {
-    const { removeWindow, setActiveWindow, activeWindow }: any = useStore(windowStore)
+    const { removeWindow, setActiveWindow, activeWindow }: WindowStoreTypes = useStore(windowStore)
     const [isUpdateCompleted, setIsUpdateCompleted] = useState<boolean>(false)
 
-    const windowRef = useRef<any>(null)
-    const headerRef = useRef<any>(null)
+    const windowRef = useRef<HTMLDivElement>(null)
+    const headerRef = useRef<HTMLDivElement>(null)
     return (
-        <div style={{zIndex: zIndex}} className={twMerge('w-[650px] absolute top-[100px] left-[200px] select-none', activeWindow === id && ' z-10' )} ref={windowRef} onClick={() => setActiveWindow(id)}>
+        <div style={{ zIndex: zIndex }} className={twMerge('w-[650px] absolute top-[100px] left-[200px] select-none', activeWindow === id && ' z-10')} ref={windowRef} onClick={() => setActiveWindow(id)}>
             <Moveable
                 target={windowRef.current}
                 draggable={true}
                 dragArea={true}
                 onDragStart={() => setActiveWindow(id)}
                 onDrag={({ beforeTranslate }) => {
-                    windowRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
+                    if (windowRef.current) windowRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
                 }}
             />
             <div ref={headerRef} className='w-full h-9 bg-[#ececec] dark:bg-[#202020] flex relative justify-center items-center rounded-t-xl text-sm font-semibold border-b border-[#c1c1c1] dark:border-[#030303] duration-300'>
@@ -45,8 +46,8 @@ const SoftwareUpdater: NextPage<Props> = ({ id, zIndex }) => {
 
 export default SoftwareUpdater
 
-const Updating = ({ id, setCompleted }: { id: number, setCompleted: (e: any) => void }) => {
-    const { removeWindow }: any = useStore(windowStore)
+const Updating = ({ id, setCompleted }: { id: number, setCompleted: (e: boolean) => void }) => {
+    const { removeWindow }: WindowStoreTypes = useStore(windowStore)
     const [loadingPercent, setLoadingPercent] = useState<number>(0)
     const [stopped, setStopped] = useState<boolean>(false)
 
@@ -105,7 +106,7 @@ const Updating = ({ id, setCompleted }: { id: number, setCompleted: (e: any) => 
 }
 
 const UpdateCompleted = ({ id }: { id: number }) => {
-    const { removeWindow }: any = useStore(windowStore)
+    const { removeWindow }: WindowStoreTypes = useStore(windowStore)
     return (
         <>
             <div className='flex gap-3 pb-3'>

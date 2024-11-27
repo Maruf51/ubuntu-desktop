@@ -7,11 +7,10 @@ import { useStore } from 'zustand'
 import { userStore } from '@/store/useStore'
 import { twMerge } from 'tailwind-merge'
 import { useState } from 'react'
+import { UserStoreTypes } from '@/types/types'
 
-interface Props { }
-
-const Nav: NextPage<Props> = ({ }) => {
-    const { user }: any = useStore(userStore)
+const Nav: NextPage = ({ }) => {
+    const { user }: UserStoreTypes = useStore(userStore)
     const [activeTab, setActiveTab] = useState<number>(1)
     const tabs = [1, 2]
 

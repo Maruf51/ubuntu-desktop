@@ -6,13 +6,10 @@ import linuxImage from '@/images/linux.png'
 import { useEffect, useRef, useState } from 'react'
 import { useStore } from 'zustand'
 import { userStore } from '@/store/useStore'
-import { IoIosArrowBack } from 'react-icons/io'
 import { twMerge } from 'tailwind-merge'
-import { formatDateTime } from '@/functions/functions'
+import { UserStoreTypes } from '@/types/types'
 
-interface Props { }
-
-const LockPage: NextPage<Props> = ({ }) => {
+const LockPage: NextPage = ({ }) => {
     const [login, setLogin] = useState<boolean>(false)
 
     const newDate = new Date()
@@ -49,7 +46,7 @@ export default LockPage
 const LoginFormLock = ({ login }: { login: boolean }) => {
     const [error, setError] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
-    const { setUser, setLock }: any = useStore(userStore)
+    const { setUser, setLock }: UserStoreTypes = useStore(userStore)
     const inputRef = useRef<HTMLInputElement | null>(null)
 
     useEffect(() => {

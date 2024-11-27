@@ -9,10 +9,8 @@ import linuxImage from '@/images/linux.png'
 import LoginForm from '../shared/LoginForm'
 
 
-interface Props { }
-
-const Signin: NextPage<Props> = ({ }) => {
-    const [login, setLogin] = useState(false)
+const Signin: NextPage = ({ }) => {
+    const [login, setLogin] = useState<boolean>(false)
 
     return (
         <>

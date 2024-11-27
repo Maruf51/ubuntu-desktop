@@ -5,11 +5,12 @@ import LoadingScreen from "@/components/loading-screen/LoadingScreen";
 import LockPage from "@/components/lock-page/LockPage";
 import Signin from "@/components/signin/Signin";
 import { userStore } from "@/store/useStore";
+import { UserStoreTypes } from "@/types/types";
 import { useEffect, useState } from "react";
 import { useStore } from "zustand";
 
 export default function Home() {
-  const { user, setUser, lock }: any = useStore(userStore)
+  const { user, lock }: UserStoreTypes = useStore(userStore)
   const [loadingScreen, setLoadingScreen] = useState<boolean>(true)
 
   useEffect(() => {

@@ -1,19 +1,17 @@
 import { NextPage } from 'next'
 import Nav from '../shared/Nav'
-import { docApps, wallpapers } from '@/data/data'
+import { docApps } from '@/data/data'
 import { FaUbuntu } from 'react-icons/fa6'
-import { DocAppTypes, WindowStoreTypes } from '@/types/types'
+import { DocAppTypes, MetaDataStoreTypes, WindowStoreTypes, WindowTypes } from '@/types/types'
 import Image from 'next/image'
 import { useStore } from 'zustand'
-import { useMetaDataStore, windowStore } from '@/store/useStore'
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '../ui/context-menu'
+import { metaDataStore, windowStore } from '@/store/useStore'
+import { ContextMenu, ContextMenuTrigger } from '../ui/context-menu'
 import DesktopContext from '../context-menu-contents/DesktopContext'
 
-interface Props { }
-
-const HomePage: NextPage<Props> = ({ }) => {
-  const { addNewWindow, windows, setActiveWindow, activeWindow }: any = useStore(windowStore)
-  const { wallpaper }: any = useStore(useMetaDataStore)
+const HomePage: NextPage = ({ }) => {
+  const { addNewWindow, windows, setActiveWindow }: WindowStoreTypes = useStore(windowStore)
+  const { wallpaper }: MetaDataStoreTypes = useStore(metaDataStore)
   return (
     <div className='w-screen h-screen'>
       <div className="w-full h-full flex flex-col">
@@ -34,9 +32,9 @@ const HomePage: NextPage<Props> = ({ }) => {
           <ContextMenu>
             <ContextMenuTrigger className='w-full h-full relative overflow-hidden'>
               {
-                windows.map((window: WindowStoreTypes) => {
+                windows.map((window: WindowTypes) => {
                   const Component = window.comp;
-                  return <Component id={window.id} zIndex={window.zIndex} key={window.id} />
+                  return <Component id={window.id} zIndex={window.zIndex || 0} key={window.id} />
                 })
               }
             </ContextMenuTrigger>
