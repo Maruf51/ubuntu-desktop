@@ -1,9 +1,14 @@
 import { NextPage } from 'next'
 import { ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger } from '../ui/context-menu'
+import { useStore } from 'zustand'
+import { windowStore } from '@/store/useStore'
+import Settings from '../doc-apps/Settings'
 
 interface Props { }
 
 const DesktopContext: NextPage<Props> = ({ }) => {
+    const {addNewWindow, setActiveWindow}: any = useStore(windowStore)
+
     return (
         <ContextMenuContent>
             <ContextMenuItem>New Folder</ContextMenuItem>
@@ -33,8 +38,16 @@ const DesktopContext: NextPage<Props> = ({ }) => {
             <ContextMenuSeparator />
             <ContextMenuItem>Change Background...</ContextMenuItem>
             <ContextMenuSeparator />
-            <ContextMenuItem>Desktop Icons Settings</ContextMenuItem>
-            <ContextMenuItem>Display Settings</ContextMenuItem>
+            <ContextMenuItem onClick={() => {
+                const id = Math.round(Math.random() * 100000000)
+                addNewWindow({ comp: Settings, id, name: 'settings' })
+                setActiveWindow(id)
+            }}>Desktop Icons Settings</ContextMenuItem>
+            <ContextMenuItem onClick={() => {
+                const id = Math.round(Math.random() * 100000000)
+                addNewWindow({ comp: Settings, id, name: 'settings' })
+                setActiveWindow(id)
+            }}>Display Settings</ContextMenuItem>
         </ContextMenuContent>
     )
 }

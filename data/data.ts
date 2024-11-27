@@ -33,8 +33,6 @@ const wallpapers = [
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/Fuwafuwa_nanbatto_san_by_amaral-light_tj5ljgv71.png',
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/Monument_valley_by_orbitelambda_Siol0ngS_.jpg',
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/Northan_lights_by_mizuno_xC63o3s0r.webp',
-    'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/Province_of_the_south_of_france_by_orbitelambda_YMAFEg0gRE.jpg',
-    'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/ubuntu-default-greyscale-wallpaper_8mpXElZ9TW.png',
     'https://ik.imagekit.io/znex04bydzr/Ubuntu%20Wallpapers/ubuntu-wallpaper-d_dLFAFk01d.png'
 ]
 
@@ -166,8 +164,13 @@ const settingsSidebar = [
     ]
 ]
 
+const colors = [
+    '#e95420', '#787859', '#657b69', '#4b8501', '#03875b', '#308280', '#0073e5', '#7764d8', '#b34cb3', '#da3450'
+]
+
 export {
     wallpapers,
     docApps,
-    settingsSidebar
+    settingsSidebar,
+    colors
 }

@@ -34,7 +34,7 @@ const PowerDropdown: NextPage<Props> = ({ }) => {
     const { theme, setTheme } = useTheme()
 
     return (
-        <PopoverContent className='primary-bg border border-[#3e3e3e] mr-1 mt-1 rounded-2xl text-white flex flex-col gap-3 w-96 select-none'>
+        <PopoverContent className='primary-bg border border-[#dedede] dark:border-[#3e3e3e] mr-1 mt-1 rounded-2xl text-white flex flex-col gap-3 w-96 select-none'>
             <div className='flex items-center justify-between'>
                 <div className='flex gap-2.5 items-center'>
                     {

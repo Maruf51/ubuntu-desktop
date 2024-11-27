@@ -5,20 +5,20 @@ import { FaUbuntu } from 'react-icons/fa6'
 import { DocAppTypes, WindowStoreTypes } from '@/types/types'
 import Image from 'next/image'
 import { useStore } from 'zustand'
-import { windowStore } from '@/store/useStore'
+import { useMetaDataStore, windowStore } from '@/store/useStore'
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '../ui/context-menu'
 import DesktopContext from '../context-menu-contents/DesktopContext'
-import Settings from '../doc-apps/Settings'
 
 interface Props { }
 
 const HomePage: NextPage<Props> = ({ }) => {
   const { addNewWindow, windows, setActiveWindow, activeWindow }: any = useStore(windowStore)
+  const { wallpaper }: any = useStore(useMetaDataStore)
   return (
     <div className='w-screen h-screen'>
       <div className="w-full h-full flex flex-col">
         <Nav />
-        <div className='w-full h-full bg-cover bg-center bg-no-repeat bg-[#4b4b4b] flex flex-1' style={{ backgroundImage: `url(${wallpapers[0]})` }}>
+        <div className='w-full h-full bg-cover bg-center bg-no-repeat bg-[#4b4b4b] flex flex-1' style={{ backgroundImage: `url(${wallpaper})` }}>
           <div className='h-full pr-1 bg-[#00000062] flex flex-col justify-between py-1.5 select-none'>
             <div className='flex flex-col gap-1'>
               {

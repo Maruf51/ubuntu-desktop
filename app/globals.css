@@ -4,15 +4,11 @@
 
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
   @apply absolute top-0 left-0 w-full h-full overflow-auto
 }
 html {
   transition: background-color 0.3s ease, color 0s ease;
-}
-
-:root, * {
-  @apply duration-300
 }
 
 
@@ -150,4 +146,8 @@ html {
 
 .rCS1w3zcxh {
   z-index: 5 !important;
+}
+
+.min_max_transition {
+  @apply transition-[opacity,_color,_background-color,_border-color,_height,_width,_top,_left,_right,_bottom] duration-300 ease-in-out
 }

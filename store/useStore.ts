@@ -1,3 +1,4 @@
+import { wallpapers } from '@/data/data'
 import { WindowStoreTypes } from '@/types/types'
 import { create } from 'zustand'
 
@@ -34,12 +35,14 @@ const useMetaDataStore = create((set) => ({
     tempVolume: 50,
     theme: 'dark',
     power: 'Balanced',
+    wallpaper: wallpapers[0],
     nightLight: false,
     mute: () => set((state: any) => ({ volume: state.volume === 0 ? (state.tempVolume === 0 ? 50 : state.tempVolume) : 0 })),
     setVolume: (value: number) => set({ volume: value, tempVolume: value }),
     changeTheme: () => set((state: any) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' })),
     changePower: () => set((state: any) => ({ power: state.power === 'Balanced' ? 'Power Saver' : 'Balanced' })),
     changeNightLight: () => set((state: any) => ({ nightLight: !state.nightLight })),
+    setWallpaper: (wp: string) => set({wallpaper: wp})
 }))
 
 const windowStore = create((set) => ({
