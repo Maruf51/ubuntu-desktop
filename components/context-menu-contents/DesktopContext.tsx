@@ -1,19 +1,25 @@
 import { NextPage } from 'next'
 import { ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger } from '../ui/context-menu'
 import { useStore } from 'zustand'
-import { windowStore } from '@/store/useStore'
+import { metaDataStore, windowStore } from '@/store/useStore'
 import Settings from '../doc-apps/Settings'
-import { WindowStoreTypes } from '@/types/types'
+import { MetaDataStoreTypes, WindowStoreTypes } from '@/types/types'
 
 
 const DesktopContext: NextPage = ({ }) => {
-    const {addNewWindow, setActiveWindow}: WindowStoreTypes = useStore(windowStore)
+    const { addNewWindow, setActiveWindow }: WindowStoreTypes = useStore(windowStore)
+    const { setFolderModal }: MetaDataStoreTypes = useStore(metaDataStore)
 
+    const settingsOpenHandler = () => {
+        const id = Math.round(Math.random() * 100000000)
+        addNewWindow({ comp: Settings, id, name: 'settings' })
+        setActiveWindow(id)
+    }
     return (
         <ContextMenuContent>
-            <ContextMenuItem>New Folder</ContextMenuItem>
+            <ContextMenuItem onClick={() => setFolderModal(['Home', 'Desktop'])}>New Folder</ContextMenuItem>
             <ContextMenuSeparator />
-            <ContextMenuItem>Paste</ContextMenuItem>
+            <ContextMenuItem disabled>Paste</ContextMenuItem>
             <ContextMenuSeparator />
             <ContextMenuItem>Select All</ContextMenuItem>
             <ContextMenuSeparator />
@@ -36,18 +42,10 @@ const DesktopContext: NextPage = ({ }) => {
             <ContextMenuItem>Show Desktop in Files</ContextMenuItem>
             <ContextMenuItem>Open in Terminal</ContextMenuItem>
             <ContextMenuSeparator />
-            <ContextMenuItem>Change Background...</ContextMenuItem>
+            <ContextMenuItem onClick={settingsOpenHandler}>Change Background...</ContextMenuItem>
             <ContextMenuSeparator />
-            <ContextMenuItem onClick={() => {
-                const id = Math.round(Math.random() * 100000000)
-                addNewWindow({ comp: Settings, id, name: 'settings' })
-                setActiveWindow(id)
-            }}>Desktop Icons Settings</ContextMenuItem>
-            <ContextMenuItem onClick={() => {
-                const id = Math.round(Math.random() * 100000000)
-                addNewWindow({ comp: Settings, id, name: 'settings' })
-                setActiveWindow(id)
-            }}>Display Settings</ContextMenuItem>
+            <ContextMenuItem onClick={settingsOpenHandler}>Desktop Icons Settings</ContextMenuItem>
+            <ContextMenuItem onClick={settingsOpenHandler}>Display Settings</ContextMenuItem>
         </ContextMenuContent>
     )
 }

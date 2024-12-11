@@ -2,7 +2,6 @@ import { useRef, useState } from 'react'
 import { useStore } from 'zustand'
 import { metaDataStore, windowStore } from '@/store/useStore'
 import { twMerge } from 'tailwind-merge'
-import Moveable from 'react-moveable'
 import WindowControlButton from '../shared/WindowControlButton'
 import { FaBars, FaBrush, FaSearch } from 'react-icons/fa'
 import { colors, settingsSidebar, wallpapers } from '@/data/data'
@@ -11,6 +10,7 @@ import Image from 'next/image'
 import { useTheme } from 'next-themes'
 import { MetaDataStoreTypes, SettingsSidebarTypes, WindowStoreTypes } from '@/types/types'
 import { IconType } from 'react-icons/lib'
+import Draggable from '../shared/Draggable'
 
 interface Props {
     id: number,
@@ -28,16 +28,17 @@ export default function Settings({ id, zIndex }: Props) {
     const windowRef = useRef<HTMLDivElement>(null)
     const headerRef = useRef<HTMLDivElement>(null)
     return (
-        <div style={{ zIndex: zIndex }} className={twMerge('w-[70%] h-[70%] absolute top-[100px] left-[200px] select-none rounded-xl overflow-hidden min_max_transition flex flex-col', activeWindow === id && ' z-10', fullScreen && '!top-0 !left-0 !w-full !h-full !transform-none !rounded-none')} ref={windowRef} onClick={() => setActiveWindow(id)}>
-            <Moveable
-                target={windowRef.current}
-                draggable={true}
-                dragArea={true}
-                onDragStart={() => setActiveWindow(id)}
-                onDrag={({ beforeTranslate }) => {
-                    if (windowRef.current) windowRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
-                }}
-            />
+        <div
+            style={{ zIndex: zIndex }}
+            className={twMerge('w-[70%] h-[70%] absolute top-[100px] left-[200px] select-none rounded-xl overflow-hidden min_max_transition flex flex-col', activeWindow === id && ' z-10', fullScreen && '!top-0 !left-0 !w-full !h-full !transform-none !rounded-none')}
+            ref={windowRef}
+            onClick={() => setActiveWindow(id)}
+            onDoubleClick={() => {
+                setActiveWindow(id)
+                setFullScreen(!fullScreen)
+            }}
+        >
+            <Draggable windowRef={windowRef} id={id} />
             <div ref={headerRef} className='w-full h-10 shrink-0 flex relative justify-between items-center text-sm font-semibold duration-300'>
                 <div className='h-full duration-300 bg-[#ebebeb] dark:bg-[#303030] max-w-[500px] min-w-[300px] w-[25%] flex justify-between items-center px-4 border-r border-b border-[#dbdbdb] dark:border-[#4f4f4f]'>
                     <FaSearch />
@@ -49,7 +50,7 @@ export default function Settings({ id, zIndex }: Props) {
                     <WindowControlButton closeHandler={() => removeWindow(id)} className='absolute right-2 z-10' minMaxHandler={() => setFullScreen(!fullScreen)} />
                 </div>
             </div>
-            <div className='bg-[#fafafa] dark:bg-[#2c2c2c] duration-300 z-10 relative h-full flex flex-1 overflow-auto'>
+            <div onDoubleClick={(e) => e.stopPropagation()} className='bg-[#fafafa] dark:bg-[#2c2c2c] duration-300 z-10 relative h-full flex flex-1 overflow-auto'>
                 <SettingsSidebar selectedSetting={selectedSetting} setSelectedSetting={setSelectedSetting} />
                 <SettingsDetails selectedSetting={selectedSetting} />
             </div>

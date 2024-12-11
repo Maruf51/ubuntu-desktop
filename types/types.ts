@@ -11,7 +11,7 @@ export interface WindowTypes {
     comp: NextPage<IDTypes>,
     id: number,
     name: string,
-    zIndex?: number
+    zIndex: number
 }
 
 export interface UserStoreTypes {
@@ -27,28 +27,26 @@ export interface MetaDataStoreTypes {
     theme: 'dark' | 'light',
     power: 'Balanced' | 'Power Saver',
     wallpaper: string,
+    folderModal: string[] | null,
     nightLight: boolean,
     mute: () => void,
     setVolume: (e: number) => void,
     changeTheme: () => void,
     changePower: () => void,
     changeNightLight: () => void,
-    setWallpaper: (e: string) => void
+    setWallpaper: (e: string) => void,
+    setFolderModal: (e: string[] | null) => void
 }
-
-// export interface WindowTypes {
-//     comp: JSX.Element,
-//     id: number,
-//     name: string,
-//     zIndex: number
-// }
 
 export interface WindowStoreTypes {
     windows: WindowTypes[],
     activeWindow: null | number,
+    startMenu: boolean,
+    setStartMenu: (value: boolean) => void,
     addNewWindow: (newData: WindowTypes) => void,
     removeWindow: (id: number) => void,
-    setActiveWindow: (id: number) => void
+    setActiveWindow: (id: number) => void,
+    quitWindows: (name: string) => void
 }
 
 export interface SettingsSidebarTypes {
@@ -61,4 +59,31 @@ export interface DocAppTypes {
     title: string,
     icon: StaticImageData,
     component: NextPage<{id: number, zIndex: number}>
+}
+
+export interface StartMenuAppTypes {
+    name: string,
+    title: string,
+    icon: StaticImageData,
+    component?: NextPage<{id: number, zIndex: number}>
+}
+
+export interface FileSystemTypes {
+    id: number,
+    type: 'folder' | 'file',
+    name: string,
+    children?: FileSystemTypes[],
+    icon: StaticImageData,
+    path: string[]
+}
+
+export interface FileSystemStoreTypes {
+    files: FileSystemTypes[],
+    setFiles: (e: FileSystemTypes[]) => void
+}
+
+export interface BrowserTabTypes {
+    title: string,
+    url: string | null,
+    id: number
 }

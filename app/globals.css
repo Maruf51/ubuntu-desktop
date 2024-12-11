@@ -5,12 +5,15 @@
 
 body {
   font-family: inherit;
-  @apply absolute top-0 left-0 w-full h-full overflow-auto
+  @apply absolute top-0 left-0 w-full h-full overflow-auto select-none
 }
 html {
   transition: background-color 0.3s ease, color 0s ease;
 }
 
+/* .duration-300 {
+  transition-duration: 0ms !important;
+} */
 
 .loading-animation {
   animation: loading-animation 1.5s infinite;
@@ -150,4 +153,30 @@ html {
 
 .min_max_transition {
   @apply transition-[opacity,_color,_background-color,_border-color,_height,_width,_top,_left,_right,_bottom] duration-300 ease-in-out
+}
+
+.animated-opacity {
+  animation: animated-opacity .3s forwards;
+}
+
+@keyframes animated-opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+
+.animated-modal {
+  animation: animated-modal .2s ease-in-out forwards;
+}
+
+@keyframes animated-modal {
+  0%{
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
 }

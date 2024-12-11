@@ -6,8 +6,8 @@ import { useStore } from 'zustand'
 import { windowStore } from '@/store/useStore'
 import { useEffect, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Moveable from 'react-moveable'
 import { WindowStoreTypes } from '@/types/types'
+import Draggable from '../shared/Draggable'
 
 interface Props {
     id: number,
@@ -22,15 +22,7 @@ const SoftwareUpdater: NextPage<Props> = ({ id, zIndex }) => {
     const headerRef = useRef<HTMLDivElement>(null)
     return (
         <div style={{ zIndex: zIndex }} className={twMerge('w-[650px] absolute top-[100px] left-[200px] select-none', activeWindow === id && ' z-10')} ref={windowRef} onClick={() => setActiveWindow(id)}>
-            <Moveable
-                target={windowRef.current}
-                draggable={true}
-                dragArea={true}
-                onDragStart={() => setActiveWindow(id)}
-                onDrag={({ beforeTranslate }) => {
-                    if (windowRef.current) windowRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
-                }}
-            />
+            <Draggable windowRef={windowRef} id={id} />
             <div ref={headerRef} className='w-full h-9 bg-[#ececec] dark:bg-[#202020] flex relative justify-center items-center rounded-t-xl text-sm font-semibold border-b border-[#c1c1c1] dark:border-[#030303] duration-300'>
                 <h2>Software Updater {id}</h2>
                 <WindowControlButton closeHandler={() => removeWindow(id)} minMax={false} className='absolute right-2 z-10' />

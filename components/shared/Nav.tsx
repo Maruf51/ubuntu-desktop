@@ -22,7 +22,7 @@ const Nav: NextPage = ({ }) => {
         }
     }
     return (
-        <nav className='bg-[#1d1d1d] w-full h-9 text-white grid grid-cols-3 items-center px-1 py-1'>
+        <nav className='bg-[#1d1d1d] w-full h-9 text-white grid grid-cols-3 items-center px-1 py-1 flex-none'>
             <div className='h-full'>
                 {
                     user && <div className='h-full'>
