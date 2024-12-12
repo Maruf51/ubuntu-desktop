@@ -147,8 +147,8 @@ html {
   opacity: 0;
 }
 
-.rCS1w3zcxh {
-  z-index: 5 !important;
+.rCS1w3zcxh, .moveable-control, .moveable-direction, .moveable-w, .moveable-resizable {
+  z-index: 10 !important;
 }
 
 .min_max_transition {

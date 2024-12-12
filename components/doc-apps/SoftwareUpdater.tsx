@@ -21,18 +21,19 @@ const SoftwareUpdater: NextPage<Props> = ({ id, zIndex }) => {
     const windowRef = useRef<HTMLDivElement>(null)
     const headerRef = useRef<HTMLDivElement>(null)
     return (
-        <div style={{ zIndex: zIndex }} className={twMerge('w-[650px] absolute top-[100px] left-[200px] select-none', activeWindow === id && ' z-10')} ref={windowRef} onClick={() => setActiveWindow(id)}>
-            <Draggable windowRef={windowRef} id={id} />
-            <div ref={headerRef} className='w-full h-9 bg-[#ececec] dark:bg-[#202020] flex relative justify-center items-center rounded-t-xl text-sm font-semibold border-b border-[#c1c1c1] dark:border-[#030303] duration-300'>
-                <h2>Software Updater {id}</h2>
-                <WindowControlButton closeHandler={() => removeWindow(id)} minMax={false} className='absolute right-2 z-10' />
+        <Draggable id={id} zIndex={zIndex} draggableRef={headerRef} fullScreen={false} width={650} height={184} reSize={false}>
+            <div style={{ zIndex: zIndex }} className={twMerge('w-[650px] select-none')} ref={windowRef} onClick={() => setActiveWindow(id)}>
+                <div ref={headerRef} className='w-full h-9 bg-[#ececec] dark:bg-[#202020] flex relative justify-center items-center rounded-t-xl text-sm font-semibold border-b border-[#c1c1c1] dark:border-[#030303] duration-300'>
+                    <h2>Software Updater {id}</h2>
+                    <WindowControlButton closeHandler={() => removeWindow(id)} minMax={false} className='absolute right-2 z-10' />
+                </div>
+                <div className='bg-[#fafafa] dark:bg-[#2c2c2c] duration-300 p-3 z-10 relative'>
+                    {
+                        isUpdateCompleted ? <UpdateCompleted id={id} /> : <Updating setCompleted={setIsUpdateCompleted} id={id} />
+                    }
+                </div>
             </div>
-            <div className='bg-[#fafafa] dark:bg-[#2c2c2c] duration-300 p-3 z-10 relative'>
-                {
-                    isUpdateCompleted ? <UpdateCompleted id={id} /> : <Updating setCompleted={setIsUpdateCompleted} id={id} />
-                }
-            </div>
-        </div>
+        </Draggable>
     )
 }
 

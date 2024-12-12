@@ -43,11 +43,11 @@ const metaDataStore = create<MetaDataStoreTypes>((set) => ({
     wallpaper: wallpapers[0],
     nightLight: false,
     folderModal: null,
-    mute: () => set((state: any) => ({ volume: state.volume === 0 ? (state.tempVolume === 0 ? 50 : state.tempVolume) : 0 })),
-    setVolume: (value: number) => set({ volume: value, tempVolume: value }),
-    changeTheme: () => set((state: any) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' })),
-    changePower: () => set((state: any) => ({ power: state.power === 'Balanced' ? 'Power Saver' : 'Balanced' })),
-    changeNightLight: () => set((state: any) => ({ nightLight: !state.nightLight })),
+    mute: () => set((state) => ({ volume: state.volume === 0 ? (state.tempVolume === 0 ? 50 : state.tempVolume) : 0 })),
+    setVolume: (value) => set({ volume: value, tempVolume: value }),
+    changeTheme: () => set((state) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' })),
+    changePower: () => set((state) => ({ power: state.power === 'Balanced' ? 'Power Saver' : 'Balanced' })),
+    changeNightLight: () => set((state) => ({ nightLight: !state.nightLight })),
     setWallpaper: (wp) => set({ wallpaper: wp }),
     setFolderModal: (value) => set({ folderModal: value })
 }))
@@ -57,13 +57,13 @@ const windowStore = create<WindowStoreTypes>((set) => ({
     activeWindow: null,
     startMenu: false,
     setStartMenu: ((value) => set({ startMenu: value })),
-    addNewWindow: ((newData) => set((state: any) => ({ windows: [...state.windows, newData], startMenu: false }))),
-    removeWindow: ((id) => set((state: any) => ({
+    addNewWindow: ((newData) => set((state) => ({ windows: [...state.windows, newData], startMenu: false }))),
+    removeWindow: ((id) => set((state) => ({
         windows: removeWindowHandler(state.windows, id),
         // activeWindow: activeWindowHandler(state.windows, id)
     }))),
-    setActiveWindow: ((id) => set((state: any) => ({ windows: activeWindowHandler(state.windows, id), startMenu: false }))),
-    quitWindows: ((name) => set((state: any) => ({ windows: quitWindowsHandler(state.windows, name) })))
+    setActiveWindow: ((id) => set((state) => ({ windows: activeWindowHandler(state.windows, id), startMenu: false }))),
+    quitWindows: ((name) => set((state) => ({ windows: quitWindowsHandler(state.windows, name) })))
 }))
 
 const fileSystemStore = create<FileSystemStoreTypes>((set) => ({
