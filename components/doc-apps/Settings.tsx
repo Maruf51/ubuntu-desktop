@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function Settings({ id, zIndex }: Props) {
-    const { removeWindow, setActiveWindow, activeWindow }: WindowStoreTypes = useStore(windowStore)
+    const { removeWindow, setActiveWindow }: WindowStoreTypes = useStore(windowStore)
     const [fullScreen, setFullScreen] = useState<boolean>(false)
     const [selectedSetting, setSelectedSetting] = useState<{ name: string, icon: IconType }>({
         name: 'Appearance',

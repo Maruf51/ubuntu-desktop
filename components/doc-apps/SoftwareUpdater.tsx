@@ -15,7 +15,7 @@ interface Props {
 }
 
 const SoftwareUpdater: NextPage<Props> = ({ id, zIndex }) => {
-    const { removeWindow, setActiveWindow, activeWindow }: WindowStoreTypes = useStore(windowStore)
+    const { removeWindow, setActiveWindow }: WindowStoreTypes = useStore(windowStore)
     const [isUpdateCompleted, setIsUpdateCompleted] = useState<boolean>(false)
 
     const windowRef = useRef<HTMLDivElement>(null)

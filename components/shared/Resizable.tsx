@@ -2,9 +2,8 @@ import { NextPage } from 'next'
 import { useRef } from 'react';
 import Moveable from 'react-moveable';
 
-interface Props { }
 
-const Resizables: NextPage<Props> = ({ }) => {
+const Resizables: NextPage = ({ }) => {
     const targetRef = useRef<HTMLDivElement>(null);
 
     return (

@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function Portfolio({ id, zIndex }: Props) {
-    const { removeWindow, setActiveWindow, activeWindow }: WindowStoreTypes = useStore(windowStore)
+    const { removeWindow, setActiveWindow }: WindowStoreTypes = useStore(windowStore)
     const [fullScreen, setFullScreen] = useState<boolean>(false)
 
     const windowRef = useRef<HTMLDivElement>(null)

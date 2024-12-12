@@ -2,8 +2,8 @@ import FolderContext from '@/components/context-menu-contents/FolderContext'
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { findFolder, renameFolder } from '@/functions/functions'
-import { fileSystemStore, metaDataStore } from '@/store/useStore'
-import { FileSystemStoreTypes, FileSystemTypes, MetaDataStoreTypes } from '@/types/types'
+import { fileSystemStore } from '@/store/useStore'
+import { FileSystemStoreTypes, FileSystemTypes } from '@/types/types'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -29,7 +29,7 @@ const Folder: NextPage<Props> = ({ data, selectedFolder, setSelectedFolder, navi
     }
     return (
         <ContextMenu onOpenChange={(e) => {
-            e && setSelectedFolder(data)
+            if (e) setSelectedFolder(data)
         }}>
             <ContextMenuTrigger>
                 <div onDoubleClick={openHandler} onClick={() => setSelectedFolder(data)} className={twMerge('w-[100px] h-auto z-10 relative flex flex-col justify-center items-center duration-300 hover:bg-[#ebebeb] dark:hover:bg-[#272727] px-3 py-2 rounded-lg overflow-hidden', selectedFolder && selectedFolder.name === data.name && 'bg-[#bdd7d6] dark:bg-[#243e3d] hover:bg-[#bdd7d6] dark:hover:bg-[#243e3d]')}>

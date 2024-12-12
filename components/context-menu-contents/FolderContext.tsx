@@ -16,7 +16,7 @@ const FolderContext: NextPage<Props> = ({ openHandler, renameOpenHandler, disabl
     const { files, setFiles }: FileSystemStoreTypes = useStore(fileSystemStore)
 
     const moveToTrashHnadler = () => {
-        let newFiles = moveToTrash(files, folder.path)
+        const newFiles = moveToTrash(files, folder.path)
         const trashIndex = newFiles.findIndex((file: FileSystemTypes) => file.path[0] === 'Trash')
         newFiles[trashIndex].children = [...(newFiles[trashIndex].children || []), folder]
 

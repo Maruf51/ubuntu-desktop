@@ -31,7 +31,7 @@ const StartMenuApps: NextPage<Props> = ({ apps }) => {
 export default StartMenuApps
 
 const StartMenuApp = ({ app }: { app: StartMenuAppTypes }) => {
-    const { name, title, icon, component } = app
+    const { name, title, icon } = app
     const { setStartMenu }: WindowStoreTypes = useStore(windowStore)
 
     const { addNewWindow, windows, setActiveWindow }: WindowStoreTypes = useStore(windowStore)

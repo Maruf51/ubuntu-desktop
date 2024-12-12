@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger } from '../ui/context-menu'
+import { ContextMenuContent, ContextMenuItem, ContextMenuSeparator } from '../ui/context-menu'
 import { WindowStoreTypes, WindowTypes } from '@/types/types'
 import { useStore } from 'zustand'
 import { windowStore } from '@/store/useStore'

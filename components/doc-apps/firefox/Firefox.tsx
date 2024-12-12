@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function Firefox({ id, zIndex }: Props) {
-    const { removeWindow, activeWindow }: WindowStoreTypes = useStore(windowStore)
+    const { removeWindow }: WindowStoreTypes = useStore(windowStore)
     const [fullScreen, setFullScreen] = useState<boolean>(false)
     const [searchValue, setSearchValue] = useState<string>('')
     const [tabs, setTabs] = useState<BrowserTabTypes[]>([
@@ -73,7 +73,7 @@ export default function Firefox({ id, zIndex }: Props) {
         e.preventDefault()
 
         setTabs((prevState: BrowserTabTypes[]) => {
-            let newTabs = [...prevState]
+            const newTabs = [...prevState]
             const index = newTabs.findIndex((tab: BrowserTabTypes) => tab.id === activeTab)
             if (searchValue.includes('https://')) {
                 newTabs[index].url = searchValue

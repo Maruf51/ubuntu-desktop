@@ -12,7 +12,7 @@ const DesktopContext: NextPage = ({ }) => {
 
     const settingsOpenHandler = () => {
         const id = Math.round(Math.random() * 100000000)
-        addNewWindow({ comp: Settings, id, name: 'settings' })
+        addNewWindow({ comp: Settings, id, name: 'settings', zIndex: 100 })
         setActiveWindow(id)
     }
     return (

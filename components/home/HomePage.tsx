@@ -12,7 +12,6 @@ import { twMerge } from 'tailwind-merge'
 import { useEffect, useRef, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import StartMenuApps from '../start-menu/StartMenuApps'
-import Resizables from '../shared/Resizable'
 
 const HomePage: NextPage = ({ }) => {
   const { windows, startMenu, setStartMenu }: WindowStoreTypes = useStore(windowStore)

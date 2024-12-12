@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function Files({ id, zIndex }: Props) {
-    const { removeWindow, setActiveWindow, activeWindow }: WindowStoreTypes = useStore(windowStore)
+    const { removeWindow, setActiveWindow }: WindowStoreTypes = useStore(windowStore)
     const { files }: FileSystemStoreTypes = useStore(fileSystemStore)
     const [fullScreen, setFullScreen] = useState<boolean>(false)
     const [paths, setPaths] = useState<string[]>(['Home'])
