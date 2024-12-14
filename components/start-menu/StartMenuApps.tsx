@@ -70,7 +70,7 @@ const StartMenuApp = ({ app }: { app: StartMenuAppTypes }) => {
             }
         }} className='hover:bg-[#343434] dark:hover:bg-[#343434] w-[110px] h-[130px] px-5 py-3 rounded-xl text-center'>
             <Image src={icon} width={100} height={100} alt={name} className='w-full aspect-square mb-3' />
-            <h3 className=' truncate text-sm'>{title}</h3>
+            <h3 className=' truncate text-sm text-white dark:text-white'>{title}</h3>
         </div>
     )
 }
