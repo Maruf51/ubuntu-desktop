@@ -29,8 +29,8 @@ export default function Portfolio({ id, zIndex }: Props) {
                         <WindowControlButton closeHandler={() => removeWindow(id)} className='absolute right-2 z-10' minMaxHandler={() => setFullScreen(!fullScreen)} />
                     </div>
                 </div>
-                <div onDoubleClick={(e) => e.stopPropagation()} className='bg-[#fafafa] dark:bg-[#2c2c2c] duration-300 w-full z-10 relative h-full min-h-[50%] flex flex-1 overflow-auto'>
-                    {/* <iframe src="https://maruf-portfolio-pied.vercel.app/" className='w-full h-full'></iframe> */}
+                <div onDoubleClick={(e) => e.stopPropagation()} className='bg-[#fafafa] dark:bg-[#2c2c2c] duration-300 w-full z-10 relative h-full min-h-[50%] flex justify-center items-center flex-1 overflow-hidden'>
+                    <iframe src="https://maruf-portfolio-pied.vercel.app/" className='w-full h-full absolute top-0 left-0'></iframe>
                 </div>
             </div>
         </Draggable>

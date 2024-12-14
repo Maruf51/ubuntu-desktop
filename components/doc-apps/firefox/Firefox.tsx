@@ -34,9 +34,6 @@ export default function Firefox({ id, zIndex }: Props) {
     const windowRef = useRef<HTMLDivElement>(null)
     const headerRef = useRef<HTMLDivElement>(null)
 
-    // const [width, setWidth] = useState<number>(0);
-    // console.log(width)
-
     useEffect(() => {
         const handleResize = (entries: ResizeObserverEntry[]) => {
             if (entries[0].contentRect) {
