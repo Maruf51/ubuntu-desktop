@@ -1,11 +1,11 @@
 import { fileSystem, wallpapers } from '@/data/data'
-import { FileSystemStoreTypes, MetaDataStoreTypes, UserStoreTypes, WindowStoreTypes, WindowTypes } from '@/types/types'
+import { FileSystemStoreTypes, FileSystemTypes, MetaDataStoreTypes, UserStoreTypes, WindowStoreTypes, WindowTypes } from '@/types/types'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware';
 
-const removeWindowHandler = (data: WindowTypes[], id: number) => {
-    const filteredData = data.filter((dt: WindowTypes) => dt.id !== id)
-    return filteredData
-}
+const removeWindowHandler = (data: WindowTypes[], id: number) =>
+    data.filter((dt: WindowTypes) => dt.id !== id);
+
 
 const activeWindowHandler = (data: WindowTypes[], id: number) => {
     const filteredWindows = data.filter((dt: WindowTypes) => dt.id !== id)
@@ -23,9 +23,21 @@ const activeWindowHandler = (data: WindowTypes[], id: number) => {
     return returnedWindows
 }
 
-const quitWindowsHandler = (data: WindowTypes[], name: string): WindowTypes[] => {
-    const filteredWindows = data.filter((window: WindowTypes) => window.name !== name)
-    return filteredWindows || []
+
+const quitWindowsHandler = (data: WindowTypes[], name: string): WindowTypes[] =>
+    data.filter((window: WindowTypes) => window.name !== name) || []
+
+const emptyTrashHandler = (data: FileSystemTypes[]): FileSystemTypes[] => {
+    let newFiles = [...data]
+    newFiles[9].children = []
+    return newFiles
+}
+
+const deleteFromTrashHandler = (data: FileSystemTypes[], id: number): FileSystemTypes[] => {
+    let newData = [...data]
+    const filteredData = data[9].children && data[9].children.filter((dt: FileSystemTypes) => dt.id !== id)
+    newData[9].children = filteredData
+    return newData;
 }
 
 const userStore = create<UserStoreTypes>((set) => ({
@@ -35,41 +47,70 @@ const userStore = create<UserStoreTypes>((set) => ({
     setLock: (newLock: boolean) => set({ lock: newLock })
 }))
 
-const metaDataStore = create<MetaDataStoreTypes>((set) => ({
-    volume: 50,
-    tempVolume: 50,
-    theme: 'dark',
-    power: 'Balanced',
-    wallpaper: wallpapers[0],
-    nightLight: false,
-    folderModal: null,
-    mute: () => set((state) => ({ volume: state.volume === 0 ? (state.tempVolume === 0 ? 50 : state.tempVolume) : 0 })),
-    setVolume: (value) => set({ volume: value, tempVolume: value }),
-    changeTheme: () => set((state) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' })),
-    changePower: () => set((state) => ({ power: state.power === 'Balanced' ? 'Power Saver' : 'Balanced' })),
-    changeNightLight: () => set((state) => ({ nightLight: !state.nightLight })),
-    setWallpaper: (wp) => set({ wallpaper: wp }),
-    setFolderModal: (value) => set({ folderModal: value })
-}))
+const metaDataStore = create<MetaDataStoreTypes>()(
+    persist(
+        (set) => ({
+            volume: 50,
+            tempVolume: 50,
+            theme: 'dark',
+            power: 'Balanced',
+            wallpaper: wallpapers[0],
+            nightLight: false,
+            folderModal: null,
+            mute: () => set((state) => ({ volume: state.volume === 0 ? (state.tempVolume === 0 ? 50 : state.tempVolume) : 0 })),
+            setVolume: (value) => set({ volume: value, tempVolume: value }),
+            changeTheme: () => set((state) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' })),
+            changePower: () => set((state) => ({ power: state.power === 'Balanced' ? 'Power Saver' : 'Balanced' })),
+            changeNightLight: () => set((state) => ({ nightLight: !state.nightLight })),
+            setWallpaper: (wp) => set({ wallpaper: wp }),
+            setFolderModal: (value) => set({ folderModal: value })
+        }),
+        {
+            name: 'meta-data',
+            partialize: (state) => ({
+                volume: state.volume,
+                tempVolume: state.tempVolume,
+                theme: state.theme,
+                power: state.power,
+                wallpaper: state.wallpaper,
+                nightLight: state.nightLight,
+            })
+        }
+    )
+)
 
 const windowStore = create<WindowStoreTypes>((set) => ({
     windows: [],
-    activeWindow: null,
     startMenu: false,
     setStartMenu: ((value) => set({ startMenu: value })),
     addNewWindow: ((newData) => set((state) => ({ windows: [...state.windows, newData], startMenu: false }))),
     removeWindow: ((id) => set((state) => ({
         windows: removeWindowHandler(state.windows, id),
-        // activeWindow: activeWindowHandler(state.windows, id)
     }))),
     setActiveWindow: ((id) => set((state) => ({ windows: activeWindowHandler(state.windows, id), startMenu: false }))),
     quitWindows: ((name) => set((state) => ({ windows: quitWindowsHandler(state.windows, name) })))
 }))
 
-const fileSystemStore = create<FileSystemStoreTypes>((set) => ({
-    files: fileSystem,
-    setFiles: ((e) => set({ files: e }))
-}))
+const fileSystemStore = create<FileSystemStoreTypes>()(
+    persist(
+        (set) => ({
+            files: fileSystem,
+            emptyTrashModal: false,
+            deleteFromTrashModal: null,
+            setFiles: ((e) => set({ files: e })),
+            emptyTrash: () => set((state) => ({ files: emptyTrashHandler(state.files) })),
+            setEmptyTrashModal: (value) => set({ emptyTrashModal: value }),
+            deleteFromTrash: () => set((state) => ({ files: deleteFromTrashHandler(state.files, state.deleteFromTrashModal?.id || 0) })),
+            setDeleteFromTrashModal: (value) => set({ deleteFromTrashModal: value }),
+        }),
+        {
+            name: 'file-system',
+            partialize: (state) => ({
+                files: state.files
+            })
+        }
+    )
+)
 
 export {
     metaDataStore,

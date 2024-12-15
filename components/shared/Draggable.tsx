@@ -51,48 +51,31 @@ const Draggable: NextPage<PropsWithChildren<Props>> = ({ id, children, fullScree
                 </div>
                 {
                     !fullScreen &&
-                    (
-                        reSize ?
-                            <Moveable
-                                target={targetRef}
-                                dragTarget={draggableRef}
-                                draggable={true}
-                                throttleDrag={1}
-                                edgeDraggable={false}
-                                startDragRotate={0}
-                                throttleDragRotate={0}
-                                onDragStart={() => setIsDraggingOrResizing(true)} // Disable transition on start
-                                onDrag={e => {
-                                    e.target.style.transform = e.transform;
-                                }}
-                                onDragEnd={() => setIsDraggingOrResizing(false)} // Re-enable transition on end
-                                resizable={true}
-                                keepRatio={false}
-                                throttleResize={1}
-                                renderDirections={["nw", "n", "ne", "w", "e", "sw", "s", "se"]}
-                                onResizeStart={() => setIsDraggingOrResizing(true)} // Disable transition on start
-                                onResize={e => {
-                                    e.target.style.width = `${e.width}px`;
-                                    e.target.style.height = `${e.height}px`;
-                                    e.target.style.transform = e.drag.transform;
-                                }}
-                                onResizeEnd={() => setIsDraggingOrResizing(false)} // Re-enable transition on end
-                            /> :
-                            <Moveable
-                                target={targetRef}
-                                dragTarget={draggableRef}
-                                draggable={true}
-                                throttleDrag={1}
-                                edgeDraggable={false}
-                                startDragRotate={0}
-                                throttleDragRotate={0}
-                                onDragStart={() => setIsDraggingOrResizing(true)} // Disable transition on start
-                                onDrag={e => {
-                                    e.target.style.transform = e.transform;
-                                }}
-                                onDragEnd={() => setIsDraggingOrResizing(false)} // Re-enable transition on end
-                            />
-                    )
+                    <Moveable
+                        target={targetRef}
+                        dragTarget={draggableRef}
+                        draggable={true}
+                        throttleDrag={1}
+                        edgeDraggable={false}
+                        startDragRotate={0}
+                        throttleDragRotate={0}
+                        onDragStart={() => setIsDraggingOrResizing(true)} // Disable transition on start
+                        onDrag={e => {
+                            e.target.style.transform = e.transform;
+                        }}
+                        onDragEnd={() => setIsDraggingOrResizing(false)} // Re-enable transition on end
+                        resizable={reSize}
+                        keepRatio={false}
+                        throttleResize={1}
+                        renderDirections={["nw", "n", "ne", "w", "e", "sw", "s", "se"]}
+                        onResizeStart={() => setIsDraggingOrResizing(true)} // Disable transition on start
+                        onResize={e => {
+                            e.target.style.width = `${e.width}px`;
+                            e.target.style.height = `${e.height}px`;
+                            e.target.style.transform = e.drag.transform;
+                        }}
+                        onResizeEnd={() => setIsDraggingOrResizing(false)} // Re-enable transition on end
+                    />
                 }
             </div>
         </div>

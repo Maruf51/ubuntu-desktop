@@ -4,7 +4,7 @@ import { NextPage } from 'next'
 import { FaPowerOff } from 'react-icons/fa'
 import { PopoverContent } from '../ui/popover'
 import { Slider } from '../ui/slider'
-import { metaDataStore, userStore } from '@/store/useStore'
+import { metaDataStore, userStore, windowStore } from '@/store/useStore'
 import { PiNetworkFill } from 'react-icons/pi'
 import { SlSpeedometer } from 'react-icons/sl'
 import { LuSunMoon } from 'react-icons/lu'
@@ -16,7 +16,9 @@ import { MdLockOutline } from "react-icons/md";
 import { LuSettings } from "react-icons/lu";
 import { RiScreenshot2Line } from "react-icons/ri";
 import { useTheme } from 'next-themes'
-import { MetaDataStoreTypes, UserStoreTypes } from '@/types/types'
+import { MetaDataStoreTypes, UserStoreTypes, WindowStoreTypes, WindowTypes } from '@/types/types'
+import Settings from '../doc-apps/Settings'
+import { activeWindowFunc } from '@/functions/functions'
 
 
 const volumeIcon = (volume: number) => {
@@ -25,20 +27,46 @@ const volumeIcon = (volume: number) => {
     return <FaVolumeHigh className='hover:bg-[#3e3e3e] w-7 h-7 p-1.5 rounded-full' />
 }
 
-const PowerDropdown: NextPage = ({ }) => {
+interface Props {
+    closePopover: () => void,
+    screenshotHandler: () => void
+}
+
+const PowerDropdown: NextPage<Props> = ({ closePopover, screenshotHandler }) => {
     const { volume, setVolume, nightLight, power, changePower, changeNightLight, mute }: MetaDataStoreTypes = metaDataStore()
     const { user, setLock, setUser }: UserStoreTypes = useStore(userStore)
+    const { addNewWindow, setActiveWindow, windows }: WindowStoreTypes = windowStore()
 
     const { theme, setTheme } = useTheme()
 
+    const settingsOpenHandler = () => {
+        const filteredApps = windows.filter((window: WindowTypes) => window.name === 'settings')
+
+        if (filteredApps.length === 0) {
+            // opening new setting
+            const id = Math.round(Math.random() * 100000000)
+            addNewWindow({ comp: Settings, id, name: 'settings', zIndex: 100 })
+            setActiveWindow(id)
+        } // getting setting on top
+        else if (filteredApps.length === 1) {
+            setActiveWindow(filteredApps[0].id)
+        } else {
+            const activeWindow = activeWindowFunc(windows)
+            const removedIdApps = filteredApps.filter((app: WindowTypes) => app.id !== activeWindow.id)
+            const topWindow = activeWindowFunc(removedIdApps)
+            setActiveWindow(topWindow.id)
+        }
+
+        closePopover() // closing the popover
+    }
     return (
         <PopoverContent className='primary-bg border border-[#dedede] dark:border-[#3e3e3e] mr-1 mt-1 rounded-2xl text-white flex flex-col gap-3 w-96 select-none'>
             <div className='flex items-center justify-between'>
                 <div className='flex gap-2.5 items-center'>
                     {
                         user && <>
-                            <RiScreenshot2Line className='item-hover' />
-                            <LuSettings className='item-hover' />
+                            <RiScreenshot2Line onClick={screenshotHandler} className='item-hover' />
+                            <LuSettings onClick={settingsOpenHandler} className='item-hover' />
                         </>
                     }
                 </div>

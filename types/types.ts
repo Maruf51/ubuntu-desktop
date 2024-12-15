@@ -40,7 +40,6 @@ export interface MetaDataStoreTypes {
 
 export interface WindowStoreTypes {
     windows: WindowTypes[],
-    activeWindow: null | number,
     startMenu: boolean,
     setStartMenu: (value: boolean) => void,
     addNewWindow: (newData: WindowTypes) => void,
@@ -58,14 +57,14 @@ export interface DocAppTypes {
     name: string,
     title: string,
     icon: StaticImageData,
-    component: NextPage<{id: number, zIndex: number}>
+    component: NextPage<{ id: number, zIndex: number }>
 }
 
 export interface StartMenuAppTypes {
     name: string,
     title: string,
     icon: StaticImageData,
-    component?: NextPage<{id: number, zIndex: number}>
+    component?: NextPage<{ id: number, zIndex: number }>
 }
 
 export interface FileSystemTypes {
@@ -79,7 +78,13 @@ export interface FileSystemTypes {
 
 export interface FileSystemStoreTypes {
     files: FileSystemTypes[],
-    setFiles: (e: FileSystemTypes[]) => void
+    emptyTrashModal: boolean,
+    deleteFromTrashModal: FileSystemTypes | null,
+    setFiles: (e: FileSystemTypes[]) => void,
+    emptyTrash: () => void,
+    setEmptyTrashModal: (e: boolean) => void,
+    deleteFromTrash: () => void,
+    setDeleteFromTrashModal: (e: FileSystemTypes | null) => void
 }
 
 export interface BrowserTabTypes {

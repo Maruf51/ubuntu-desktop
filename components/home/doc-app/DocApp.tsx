@@ -1,6 +1,7 @@
 import DocAppContext from '@/components/context-menu-contents/DocAppContext'
 import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { activeWindowFunc } from '@/functions/functions'
 import { windowStore } from '@/store/useStore'
 import { DocAppTypes, WindowStoreTypes, WindowTypes } from '@/types/types'
 import { NextPage } from 'next'
@@ -13,12 +14,6 @@ interface Props {
     data: DocAppTypes
 }
 
-const activeWindowFunc = (windows: WindowTypes[]): WindowTypes => {
-    const largestIdObject = windows.reduce((max, current) => {
-        return current.zIndex > max.zIndex ? current : max;
-    }, windows[0]);
-    return largestIdObject;
-}
 
 const DocApp: NextPage<Props> = ({ data }) => {
     const { addNewWindow, windows, setActiveWindow }: WindowStoreTypes = useStore(windowStore)

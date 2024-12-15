@@ -1,4 +1,4 @@
-import { FileSystemTypes } from "@/types/types"
+import { FileSystemTypes, WindowTypes } from "@/types/types"
 
 const formatDateTime = () => {
     const current = new Date()
@@ -209,6 +209,12 @@ function moveToTrash(data: FileSystemTypes[], path: string[]): FileSystemTypes[]
 //     return Object.values(merged);
 // }
 
+const activeWindowFunc = (windows: WindowTypes[]): WindowTypes => {
+    const largestIdObject = windows.reduce((max, current) => {
+        return current.zIndex > max.zIndex ? current : max;
+    }, windows[0]);
+    return largestIdObject;
+}
 
 
 
@@ -220,4 +226,5 @@ export {
     createNewFolder,
     renameFolder,
     moveToTrash,
+    activeWindowFunc
 }
