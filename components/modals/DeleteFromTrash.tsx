@@ -13,7 +13,7 @@ const DeleteFromTrash: NextPage = ({ }) => {
         <div className='fixed animated-opacity top-0 left-0 w-full h-full bg-[#00000062] dark:bg-[#00000062] z-[99999] flex justify-center items-center select-none'>
             <div className='w-[400px] h-auto rounded-lg overflow-hidden animated-modal duration-300 dark:border dark:border-[#3b3b3b] bg-[#fafafa] dark:bg-[#2c2c2c] flex flex-col justify-center items-center text-[#3d3d3d] dark:text-white'>
                 <div className='flex flex-col gap-3 p-5 items-center'>
-                    <h1 className='text-xl font-bold'>Permanently Delete &quot;{deleteFromTrashModal?.file?.name}&quot;?</h1>
+                    <h1 className='text-xl font-bold'>Permanently Delete &quot;{deleteFromTrashModal?.name}&quot;?</h1>
                     <p className='text-sm '>Permanently deleted items cannot be restored</p>
                 </div>
                 <div className=' w-full h-10 border-t border-[#dedede] dark:border-[#4a4a4a] flex'>
