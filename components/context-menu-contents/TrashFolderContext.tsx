@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
 import { ContextMenuContent, ContextMenuItem, ContextMenuSeparator } from '../ui/context-menu'
-import { moveToTrash } from '@/functions/functions'
 import { FileSystemStoreTypes, FileSystemTypes } from '@/types/types'
 import { useStore } from 'zustand'
 import { fileSystemStore } from '@/store/useStore'
