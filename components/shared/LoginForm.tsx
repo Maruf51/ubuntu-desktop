@@ -36,7 +36,7 @@ const LoginForm = ({ clickHandler }: { clickHandler: () => void }) => {
             <h1 className='text-lg font-medium text-white'>MD Maruf Hossain</h1>
             <form onSubmit={loginHandler} className='flex gap-2'>
                 <IoIosArrowBack onClick={clickHandler} className='bg-[#ffffff1f] hover:bg-[#515151] duration-300 cursor-pointer w-8 h-8 rounded-full p-1.5' />
-                <input autoFocus value={inputValue} onChange={(e) => setInputValue(e.target.value)} type="password" placeholder='Password' className={twMerge('p-2 pl-2.5 w-56 h-8 rounded-sm bg-[#ffffff1f] outline-none text-sm', error && 'shake-animation')} />
+                <input autoFocus value={inputValue} onChange={(e) => setInputValue(e.target.value)} type="password" placeholder='Password: 1234' className={twMerge('p-2 pl-2.5 w-56 h-8 rounded-sm bg-[#ffffff1f] outline-none text-sm', error && 'shake-animation')} />
             </form>
             {
                 error && <p className='text-xs text-[#8a8a8a]'>Password authentication error, please try again.</p>
